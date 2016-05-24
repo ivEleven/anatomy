@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Head measurements</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+	crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+	crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<style type="text/css">
+.err
+{
+color: red;
+}
+</style>
+<script type="text/javascript">
+
+$(document).ready(function () {
+	  //called when key is pressed in textbox
+	  $("#x1").keypress(function (e) {
+	     //if the letter is not digit then display error and don't type anything
+	     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+	        //display error message
+	        $("#errmsgx1").html("Digits Only").show().fadeOut("slow");
+	               return false;
+	    }
+	   });
+	  $("#x2").keypress(function (e) {
+		     //if the letter is not digit then display error and don't type anything
+		     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+		        //display error message
+		        $("#errmsgx2").html("Digits Only").show().fadeOut("slow");
+		               return false;
+		    }
+		   });
+	  $("#x3").keypress(function (e) {
+		     //if the letter is not digit then display error and don't type anything
+		     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+		        //display error message
+		        $("#errmsgx3").html("Digits Only").show().fadeOut("slow");
+		               return false;
+		    }
+		   });
+	  $("#x4").keypress(function (e) {
+		     //if the letter is not digit then display error and don't type anything
+		     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+		        //display error message
+		        $("#errmsgx4").html("Digits Only").show().fadeOut("slow");
+		               return false;
+		    }
+		   });
+	});
+	
+function getValue(inputId) {
+	return parseInt($('#'+ inputId).val())
+}
+
+
+function getValidatedValue(inputId) {
+	var x = getValue(inputId);
+	if (x) {
+		var min = parseInt($('#' + inputId).attr('min'), 10);
+		var max = parseInt($('#' + inputId).attr('max'), 10);
+		if ( x < min || x > max) {
+			$('#errmsg' + inputId).html("Value must be between " + min + " and " + max ).show().fadeOut("slow");
+	        return false;
+		}
+		return x;
+	} else {
+		$('#errmsg' + inputId).html("Empty value").show().fadeOut("slow");
+	}
+}
+
+
+$(document).on("click", "#btn_a", function(){
+	  var x1 = getValidatedValue('x1');	
+	  var x2 = getValidatedValue('x2');
+	  var x3 = getValidatedValue('x3');
+	  var x4 = getValidatedValue('x4');
+	  var result = 0.044 * x1 + 0.063 * x2 + 0.095 * x3 + 0.085 * x4 - 36.072;
+	  $("#result").html("Result = " + result).show();
+	});
+
+</script>
+</head>
+<body>
+	<div class="container">
+		<div class="page-header">
+			<h1>Head measurements</h1>
+		</div>
+		<form id="myform" class="form-horizontal">
+			<div class="control-group">
+	    		<label class="control-label">Lungimea craniului (g-op), cu valori intre 140 si 200 (mm)</label>
+	    		<div class="controls">
+			 		<input id="x1" type="number" min="140" max="200" name="x1" />&nbsp;<span class="err" id="errmsgx1"></span>
+			 	</div>
+			 </div>
+			 
+			 <div class="control-group">
+	    		<label class="control-label">Inaltimea craniului (ba-b), cu valori intre 100 si 160 (mm)</label>
+	    		<div class="controls">
+			 		<input id="x2" type="number" min="100" max="160" name="x2" />&nbsp;<span class="err" id="errmsgx2"></span>
+			 	</div>
+			 </div>
+			 
+			 <div class="control-group">
+	    		<label class="control-label">Latimea fetei (zy-zy), cu valori intre 100 si 160 (mm)</label>
+	    		<div class="controls">
+			 		<input id="x3" type="number" min="100" max="160" name="x3" />&nbsp;<span class="err" id="errmsgx3"></span>
+			 	</div>
+			 </div>
+			 
+			 <div class="control-group">
+	    		<label class="control-label">Latimea bigoniala (go-go), cu valori intre 70 si 120 (mm)</label>
+	    		<div class="controls">
+			 		<input id="x4" type="number" min="70"	max="120" name="x4" />&nbsp;<span class="err" id="errmsgx4"></span>
+			 	</div>
+			 </div>
+			<input type="button" value="Calculate" id="btn_a" />
+			<span class="result" id="result"></span>	
+		</form>
+	</div>
+</body>
+</html>
